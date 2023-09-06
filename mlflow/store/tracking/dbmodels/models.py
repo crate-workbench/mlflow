@@ -30,6 +30,7 @@ from mlflow.entities import (
 )
 from mlflow.entities.lifecycle_stage import LifecycleStage
 from mlflow.store.db.base_sql_model import Base
+from mlflow.store.tracking.util import generate_unique_integer
 from mlflow.utils.mlflow_tags import _get_run_name_from_tags
 from mlflow.utils.time_utils import get_current_time_millis
 
@@ -57,7 +58,7 @@ class SqlExperiment(Base):
 
     __tablename__ = "experiments"
 
-    experiment_id = Column(Integer, autoincrement=True)
+    experiment_id = Column(Integer, default=generate_unique_integer)
     """
     Experiment ID: `Integer`. *Primary Key* for ``experiment`` table.
     """

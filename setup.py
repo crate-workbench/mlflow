@@ -176,6 +176,7 @@ setup(
         "cratedb": [
             "crash",
             "crate[sqlalchemy]",
+            "vasuki>=0.4,<1",
         ],
     },
     entry_points="""

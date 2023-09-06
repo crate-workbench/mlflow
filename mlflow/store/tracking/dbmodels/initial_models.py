@@ -23,7 +23,7 @@ from sqlalchemy import (
 )
 from sqlalchemy.orm import backref, declarative_base, relationship
 
-from mlflow.store.tracking.dbmodels.util import generate_unique_integer
+from mlflow.store.tracking.util import generate_unique_integer
 
 Base = declarative_base(metadata=MetaData(schema="mlflow"))
 
@@ -51,7 +51,7 @@ class SqlExperiment(Base):
 
     __tablename__ = "experiments"
 
-    experiment_id = Column(Integer, autoincrement=True)
+    experiment_id = Column(Integer, default=generate_unique_integer)
     """
     Experiment ID: `Integer`. *Primary Key* for ``experiment`` table.
     """
