@@ -174,6 +174,7 @@ setup(
         "sqlserver": ["mlflow-dbstore"],
         "aliyun-oss": ["aliyunstoreplugin"],
         "cratedb": [
+            "crash",
             "crate[sqlalchemy]",
         ],
     },

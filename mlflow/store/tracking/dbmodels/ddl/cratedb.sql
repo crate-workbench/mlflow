@@ -1,0 +1,127 @@
+CREATE TABLE IF NOT EXISTS "mlflow"."datasets" (
+   "dataset_uuid" TEXT NOT NULL,
+   "experiment_id" BIGINT NOT NULL,
+   "name" TEXT NOT NULL,
+   "digest" TEXT NOT NULL,
+   "dataset_source_type" TEXT NOT NULL,
+   "dataset_source" TEXT NOT NULL,
+   "dataset_schema" TEXT,
+   "dataset_profile" TEXT
+);
+
+CREATE TABLE IF NOT EXISTS "mlflow"."experiment_tags" (
+   "key" TEXT NOT NULL,
+   "value" TEXT,
+   "experiment_id" BIGINT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS "mlflow"."experiments" (
+   "experiment_id" BIGINT NOT NULL,  -- default=autoincrement
+   "name" TEXT NOT NULL,
+   "artifact_location" TEXT,
+   "lifecycle_stage" TEXT,
+   "creation_time" BIGINT,  -- default=get_current_time_millis
+   "last_update_time" BIGINT  -- default=get_current_time_millis
+);
+
+CREATE TABLE IF NOT EXISTS "mlflow"."inputs" (
+   "input_uuid" TEXT NOT NULL,
+   "source_type" TEXT NOT NULL,
+   "source_id" TEXT NOT NULL,
+   "destination_type" TEXT NOT NULL,
+   "destination_id" TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS "mlflow"."input_tags" (
+   "input_uuid" TEXT NOT NULL,
+   "name" TEXT NOT NULL,
+   "value" TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS "mlflow"."latest_metrics" (
+   "key" TEXT NOT NULL,
+   "value" REAL NOT NULL,
+   "timestamp" BIGINT NOT NULL,
+   "step" BIGINT NOT NULL,
+   "is_nan" BOOLEAN NOT NULL,
+   "run_uuid" TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS "mlflow"."metrics" (
+   "key" TEXT NOT NULL,
+   "value" REAL NOT NULL,
+   "timestamp" BIGINT NOT NULL,
+   "step" BIGINT NOT NULL,
+   "is_nan" BOOLEAN NOT NULL,
+   "run_uuid" TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS "mlflow"."model_versions" (
+   "name" TEXT NOT NULL,
+   "version" INTEGER NOT NULL,
+   "creation_time" BIGINT,  -- default=get_current_time_millis
+   "last_update_time" BIGINT,  -- default=get_current_time_millis
+   "description" TEXT,
+   "user_id" TEXT,
+   "current_stage" TEXT,
+   "source" TEXT,
+   "run_id" TEXT,
+   "run_link" TEXT,
+   "status" TEXT,
+   "status_message" TEXT
+);
+
+CREATE TABLE IF NOT EXISTS "mlflow"."model_version_tags" (
+   "name" TEXT NOT NULL,
+   "version" INTEGER NOT NULL,
+   "key" TEXT NOT NULL,
+   "value" TEXT
+);
+
+CREATE TABLE IF NOT EXISTS "mlflow"."params" (
+   "key" TEXT NOT NULL,
+   "value" TEXT NOT NULL,
+   "run_uuid" TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS "mlflow"."registered_models" (
+   "name" TEXT NOT NULL,
+   "key" TEXT NOT NULL,
+   "value" TEXT
+);
+
+CREATE TABLE IF NOT EXISTS "mlflow"."registered_model_aliases" (
+   "name" TEXT NOT NULL,
+   "alias" TEXT NOT NULL,
+   "version" TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS "mlflow"."registered_model_tags" (
+   "name" TEXT NOT NULL,
+   "creation_time" BIGINT,  -- default=get_current_time_millis
+   "last_update_time" BIGINT,  -- default=get_current_time_millis
+   "description" TEXT
+);
+
+CREATE TABLE IF NOT EXISTS "mlflow"."runs" (
+   "run_uuid" TEXT NOT NULL,
+   "name" TEXT,
+   "source_type" TEXT,
+   "source_name" TEXT,
+   "entry_point_name" TEXT,
+   "user_id" TEXT,
+   "status" TEXT,
+   "start_time" BIGINT,
+   "end_time" BIGINT,
+   "deleted_time" BIGINT,
+   "source_version" TEXT,
+   "lifecycle_stage" TEXT,
+   "artifact_uri" TEXT,
+   "experiment_id" BIGINT
+);
+
+CREATE TABLE IF NOT EXISTS "mlflow"."tags" (
+   "key" TEXT NOT NULL,
+   "value" TEXT,
+   "run_uuid" TEXT NOT NULL
+);
