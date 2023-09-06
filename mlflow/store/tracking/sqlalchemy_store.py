@@ -159,7 +159,7 @@ class SqlAlchemyStore(AbstractStore):
         self.ManagedSessionMaker = mlflow.store.db.utils._get_managed_session_maker(
             SessionMaker, self.db_type
         )
-        mlflow.store.db.utils._verify_schema(self.engine)
+        # mlflow.store.db.utils._verify_schema(self.engine)
 
         if is_local_uri(default_artifact_root):
             mkdir(local_file_uri_to_path(default_artifact_root))

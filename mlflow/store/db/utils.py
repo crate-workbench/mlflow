@@ -88,8 +88,8 @@ def _all_tables_exist(engine):
 
 def _initialize_tables(engine):
     _logger.info("Creating initial MLflow database tables...")
-    InitialBase.metadata.create_all(engine)
-    _upgrade_db(engine)
+    # InitialBase.metadata.create_all(engine)
+    # _upgrade_db(engine)
 
 
 def _get_latest_schema_revision():
