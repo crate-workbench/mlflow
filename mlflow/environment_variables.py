@@ -93,7 +93,7 @@ MLFLOW_DFS_TMP = _EnvironmentVariable("MLFLOW_DFS_TMP", str, "/tmp/mlflow")
 
 #: Specifies the maximum number of retries for MLflow HTTP requests
 #: (default: ``5``)
-MLFLOW_HTTP_REQUEST_MAX_RETRIES = _EnvironmentVariable("MLFLOW_HTTP_REQUEST_MAX_RETRIES", int, 5)
+MLFLOW_HTTP_REQUEST_MAX_RETRIES = _EnvironmentVariable("MLFLOW_HTTP_REQUEST_MAX_RETRIES", int, 0)
 
 #: Specifies the backoff increase factor between MLflow HTTP request failures
 #: (default: ``2``)
