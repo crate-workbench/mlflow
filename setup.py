@@ -173,6 +173,9 @@ setup(
         "gateway": GATEWAY_REQUIREMENTS,
         "sqlserver": ["mlflow-dbstore"],
         "aliyun-oss": ["aliyunstoreplugin"],
+        "cratedb": [
+            "crate[sqlalchemy]",
+        ],
     },
     entry_points="""
         [console_scripts]
