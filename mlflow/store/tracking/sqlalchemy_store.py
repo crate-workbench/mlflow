@@ -263,6 +263,8 @@ class SqlAlchemyStore(AbstractStore):
                     [SqlExperimentTag(key=tag.key, value=tag.value) for tag in tags] if tags else []
                 )
                 session.add(experiment)
+                session.flush()
+                session.execute(sqlalchemy.text(f"REFRESH TABLE {table_fullname(SqlExperiment)};"))
                 if not artifact_location:
                     # this requires a double write. The first one to generate an autoincrement-ed ID
                     eid = session.query(SqlExperiment).filter_by(name=name).first().experiment_id
