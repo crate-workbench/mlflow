@@ -6,13 +6,15 @@ CREATE TABLE IF NOT EXISTS "mlflow"."datasets" (
    "dataset_source_type" TEXT NOT NULL,
    "dataset_source" TEXT NOT NULL,
    "dataset_schema" TEXT,
-   "dataset_profile" TEXT
+   "dataset_profile" TEXT,
+   PRIMARY KEY ("experiment_id", "name", "digest")
 );
 
 CREATE TABLE IF NOT EXISTS "mlflow"."experiment_tags" (
    "key" TEXT NOT NULL,
    "value" TEXT,
-   "experiment_id" BIGINT NOT NULL
+   "experiment_id" BIGINT NOT NULL,
+   PRIMARY KEY ("key", "experiment_id")
 );
 
 CREATE TABLE IF NOT EXISTS "mlflow"."experiments" (
@@ -21,7 +23,8 @@ CREATE TABLE IF NOT EXISTS "mlflow"."experiments" (
    "artifact_location" TEXT,
    "lifecycle_stage" TEXT,
    "creation_time" BIGINT,  -- default=get_current_time_millis
-   "last_update_time" BIGINT  -- default=get_current_time_millis
+   "last_update_time" BIGINT,  -- default=get_current_time_millis
+   PRIMARY KEY ("experiment_id")
 );
 
 CREATE TABLE IF NOT EXISTS "mlflow"."inputs" (
@@ -29,13 +32,15 @@ CREATE TABLE IF NOT EXISTS "mlflow"."inputs" (
    "source_type" TEXT NOT NULL,
    "source_id" TEXT NOT NULL,
    "destination_type" TEXT NOT NULL,
-   "destination_id" TEXT NOT NULL
+   "destination_id" TEXT NOT NULL,
+   PRIMARY KEY ("source_type", "source_id", "destination_type", "destination_id")
 );
 
 CREATE TABLE IF NOT EXISTS "mlflow"."input_tags" (
    "input_uuid" TEXT NOT NULL,
    "name" TEXT NOT NULL,
-   "value" TEXT NOT NULL
+   "value" TEXT NOT NULL,
+   PRIMARY KEY ("input_uuid", "name")
 );
 
 CREATE TABLE IF NOT EXISTS "mlflow"."latest_metrics" (
@@ -44,7 +49,8 @@ CREATE TABLE IF NOT EXISTS "mlflow"."latest_metrics" (
    "timestamp" BIGINT NOT NULL,
    "step" BIGINT NOT NULL,
    "is_nan" BOOLEAN NOT NULL,
-   "run_uuid" TEXT NOT NULL
+   "run_uuid" TEXT NOT NULL,
+   PRIMARY KEY ("key", "run_uuid")
 );
 
 CREATE TABLE IF NOT EXISTS "mlflow"."metrics" (
@@ -53,7 +59,8 @@ CREATE TABLE IF NOT EXISTS "mlflow"."metrics" (
    "timestamp" BIGINT NOT NULL,
    "step" BIGINT NOT NULL,
    "is_nan" BOOLEAN NOT NULL,
-   "run_uuid" TEXT NOT NULL
+   "run_uuid" TEXT NOT NULL,
+   PRIMARY KEY ("key", "timestamp", "step", "run_uuid", "is_nan")
 );
 
 CREATE TABLE IF NOT EXISTS "mlflow"."model_versions" (
@@ -81,7 +88,8 @@ CREATE TABLE IF NOT EXISTS "mlflow"."model_version_tags" (
 CREATE TABLE IF NOT EXISTS "mlflow"."params" (
    "key" TEXT NOT NULL,
    "value" TEXT NOT NULL,
-   "run_uuid" TEXT NOT NULL
+   "run_uuid" TEXT NOT NULL,
+   PRIMARY KEY ("key", "run_uuid")
 );
 
 CREATE TABLE IF NOT EXISTS "mlflow"."registered_models" (
@@ -117,11 +125,13 @@ CREATE TABLE IF NOT EXISTS "mlflow"."runs" (
    "source_version" TEXT,
    "lifecycle_stage" TEXT,
    "artifact_uri" TEXT,
-   "experiment_id" BIGINT
+   "experiment_id" BIGINT,
+   PRIMARY KEY ("run_uuid")
 );
 
 CREATE TABLE IF NOT EXISTS "mlflow"."tags" (
    "key" TEXT NOT NULL,
    "value" TEXT,
-   "run_uuid" TEXT NOT NULL
+   "run_uuid" TEXT NOT NULL,
+   PRIMARY KEY ("key", "run_uuid")
 );
