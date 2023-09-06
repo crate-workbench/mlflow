@@ -5,10 +5,9 @@ import time
 from contextlib import contextmanager
 
 import sqlalchemy
+import sqlparse
 from alembic.migration import MigrationContext  # pylint: disable=import-error
 from alembic.script import ScriptDirectory
-from crate import crash
-from crate.crash.command import CrateShell
 from sqlalchemy import sql
 
 # We need to import sqlalchemy.pool to convert poolclass string to class object
@@ -219,7 +218,7 @@ def _upgrade_db(engine):
         command.upgrade(config, "heads")
 
 
-def _setup_db_ddl_cratedb(engine):
+def _setup_db_ddl_cratedb(engine: sqlalchemy.Engine):
     """
     Because CrateDB does not play well with a full-fledged SQLAlchemy data model and
     corresponding Alembic migrations, shortcut that and replace it with a classic
@@ -229,11 +228,13 @@ def _setup_db_ddl_cratedb(engine):
     """
     with importlib.resources.path("mlflow.store.tracking.dbmodels", "ddl") as ddl:
         schema = ddl.joinpath("cratedb.sql")
-        sql = schema.read_text()
-        # FIXME: Forward database address to `CrateShell`, derived from `engine` settings.
-        #        Currently, it will connect to `localhost:4200`.
-        crash = CrateShell()
-        crash.process(sql)
+        sql_statements = schema.read_text()
+        conn = engine.raw_connection().dbapi_connection
+        with conn:
+            cursor = conn.cursor()
+            for statement in sqlparse.split(sql_statements):
+                cursor.execute(statement)
+            cursor.close()
 
 
 def _get_schema_version(engine):

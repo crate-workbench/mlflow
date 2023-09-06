@@ -178,6 +178,7 @@ setup(
         "cratedb": [
             "crash",
             "crate[sqlalchemy]",
+            "sqlparse<0.5",
             "vasuki>=0.4,<1",
         ],
     },
