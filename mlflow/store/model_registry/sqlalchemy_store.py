@@ -111,7 +111,7 @@ class SqlAlchemyStore(AbstractStore):
     @staticmethod
     def _verify_registry_tables_exist(engine):
         # Verify that all tables have been created.
-        inspected_tables = set(sqlalchemy.inspect(engine).get_table_names())
+        inspected_tables = set(sqlalchemy.inspect(engine).get_table_names(schema="mlflow"))
         expected_tables = [
             SqlRegisteredModel.__tablename__,
             SqlModelVersion.__tablename__,

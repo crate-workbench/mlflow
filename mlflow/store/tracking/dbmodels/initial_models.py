@@ -17,12 +17,15 @@ from sqlalchemy import (
     Float,
     ForeignKey,
     Integer,
+    MetaData,
     PrimaryKeyConstraint,
     String,
 )
 from sqlalchemy.orm import backref, declarative_base, relationship
 
-Base = declarative_base()
+from mlflow.store.tracking.dbmodels.util import generate_unique_integer
+
+Base = declarative_base(metadata=MetaData(schema="mlflow"))
 
 
 SourceTypes = [

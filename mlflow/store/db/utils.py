@@ -64,7 +64,7 @@ def _get_package_dir():
 def _all_tables_exist(engine):
     return {
         t
-        for t in sqlalchemy.inspect(engine).get_table_names()
+        for t in sqlalchemy.inspect(engine).get_table_names(schema="mlflow")
         # Filter out alembic tables
         if not t.startswith("alembic_")
     } == {

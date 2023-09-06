@@ -51,6 +51,7 @@ from mlflow.store.tracking.dbmodels.models import (
     SqlRun,
     SqlTag,
 )
+from mlflow.store.tracking.util import table_fullname
 from mlflow.utils.file_utils import local_file_uri_to_path, mkdir
 from mlflow.utils.mlflow_tags import (
     MLFLOW_DATASET_CONTEXT,
@@ -199,7 +200,7 @@ class SqlAlchemyStore(AbstractStore):
 
         ToDo: Identify a less hacky mechanism to create default experiment 0
         """
-        table = SqlExperiment.__tablename__
+        table = table_fullname(SqlExperiment)
         creation_time = get_current_time_millis()
         default_experiment = {
             SqlExperiment.experiment_id.name: int(SqlAlchemyStore.DEFAULT_EXPERIMENT_ID),
